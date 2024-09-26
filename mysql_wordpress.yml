@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: mydb1
+    image: mysql:latest
+    networks:
+    - lwnet:
+    volumes:
+    - /data:/var/lib/mysql
+    environment:
+    - MYSQL_ROOT_PASSWORD=redhat
+    - MYSQL_DATABASE=blogdb
+    - MYSQL_USER=vimal
+    - MYSQL_PASSWORD=redhat
+
+  wp:
+    container_name: mywp1
+    image: wordpress:latest
+    networks:
+    - lwnet:
+    ports:
+    - 8080:80
