@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: mydb1
+    image: mysql:latest
+    networks:
+      - lwnet
+    volumes:
+      - /data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=redhat
+      - MYSQL_DATABASE=blogdb
+      - MYSQL_USER=pappu
+      - MYSQL_PASSWORD=redhat
+
+  wp:
+    container_name: mywp1
+    image: wordpress:latest
+    depends_on:
+      - db
+    networks:
+      - lwnet
+    ports:
+      - "8080:80"
+    environment:
+      - WORDPRESS_DB_HOST=db:3306
+      - WORDPRESS_DB_NAME=blogdb
+      - WORDPRESS_DB_USER=pappu
+      - WORDPRESS_DB_PASSWORD=redhat
+
+networks:
+  lwnet:
+    driver: bridge
